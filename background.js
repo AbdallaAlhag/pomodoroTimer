@@ -9,13 +9,7 @@ chrome.runtime.onInstalled.addListener(() => {
 });
 
 // TODO:
-// - work runs correctly but displays wrong, assuming same for break over
-// works starts dispalys  50:59 and breaks starts dispalys 1:00 -> fix
-// break display starts at 10:59
 // - notification did clear but audio did not play right
-// -> continue with puppeteer
-//
-// slignt error with notification image but it clears / makes sound i believe?
 
 function updateTimer() {
   let clockMinutes = updateClock().minutes;
@@ -36,7 +30,6 @@ function updateTimer() {
   const minutes = String(remainingMinutes).padStart(2, "0");
 
   const seconds = String(59 - clockSeconds + 1).padStart(2, "0");
-
   chrome.storage.local.set({
     minutes: minutes,
     seconds: seconds,

@@ -31,7 +31,7 @@ export function updatePopupClock() {
 
   chrome.storage.local.get(["minutes", "seconds", "sessionType"], (data) => {
     const { minutes, seconds } = data;
-    // console.log(minutes, seconds);
+    console.log(minutes, seconds);
 
     clock.textContent = `${minutes}:${seconds}`;
     session.textContent = data.sessionType;
