@@ -53,7 +53,7 @@ describe("upDateSessionContentAndMinutes", () => {
   });
 
   test("break starts at 10:50:00 (clockMinutes)", () => {
-    const clockMinutes = 51;
+    const clockMinutes = 50;
     const result = upDateSessionContentAndMinutes(clockMinutes);
 
     expect(result.textContent).toBe("Break");

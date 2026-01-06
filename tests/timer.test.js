@@ -9,12 +9,12 @@ test("Grabs current time correctly", () => {
 
 test("Grabs current session and remaining minutes for sesison", () => {
   for (let i = 0; i < 60; i++) {
-    if (i < 51) {
+    if (i < 50) {
       expect(upDateSessionContentAndMinutes(i).textContent).toBe("Work");
       expect(upDateSessionContentAndMinutes(i).remainingMinutes).toBe(50 - i);
     } else {
       expect(upDateSessionContentAndMinutes(i).textContent).toBe("Break");
-      expect(upDateSessionContentAndMinutes(i).remainingMinutes).toBe(60 - i);
+      expect(upDateSessionContentAndMinutes(i).remainingMinutes).toBe(59 - i);
     }
   }
 });

@@ -10,12 +10,12 @@ export function upDateSessionContentAndMinutes(clockMinutes) {
   let textContent;
   let remainingMinutes;
 
-  if (clockMinutes < 51) {
+  if (clockMinutes < 50) {
     textContent = "Work";
     remainingMinutes = 50 - clockMinutes;
   } else {
     textContent = "Break";
-    remainingMinutes = 10 - (clockMinutes - 50);
+    remainingMinutes = 9 - (clockMinutes - 50);
     // this gives exactly 10 minutes of break
   }
   return { textContent, remainingMinutes };
