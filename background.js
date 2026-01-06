@@ -9,7 +9,6 @@ chrome.runtime.onInstalled.addListener(() => {
 });
 
 // TODO:
-// - notification did clear but audio did not play right
 
 function updateTimer() {
   let clockMinutes = updateClock().minutes;
@@ -44,55 +43,5 @@ chrome.alarms.onAlarm.addListener(() => {
     // updateTimer();
   });
 });
-
-let offscreenReady = false;
-let offscreenReadyPromise;
-let offscreenReadyResolve;
-
-function getOffscreenReadyPromise() {
-  if (!offscreenReadyPromise) {
-    offscreenReadyPromise = new Promise((resolve) => {
-      offscreenReadyResolve = resolve;
-    });
-  }
-  return offscreenReadyPromise;
-}
-
-async function ensureOffscreen() {
-  const offscreen = await chrome.offscreen.hasDocument();
-
-  if (!offscreen) {
-    await chrome.offscreen.createDocument({
-      url: "offscreen/offscreen.html",
-      reasons: ["AUDIO_PLAYBACK"],
-      justification: "Play timer sound",
-    });
-  }
-  return getOffscreenReadyPromise();
-}
-chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
-  if (msg.type === "offscreen-ready") {
-    offscreenReady = true;
-    offscreenReadyResolve?.();
-    return;
-  }
-
-  if (msg.type === "playSound") {
-    ensureOffscreen().then(() => {
-      chrome.runtime
-        .sendMessage({ type: "playSound-offscreen" })
-        .catch(console.error);
-    });
-  }
-});
-
-(async () => {
-  try {
-    await ensureOffscreen();
-    console.log("Offscreen ensured successfully!");
-  } catch (error) {
-    console.error("Error ensuring offscreen:", error);
-  }
-})();
 
 export { updateClock };

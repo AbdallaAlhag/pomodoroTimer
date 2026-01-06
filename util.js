@@ -39,7 +39,6 @@ export function showNotification(title, message) {
     priority: 2,
   });
 
-  chrome.runtime.sendMessage({ type: "playSound" });
   // setTimeout(() => {
   //   chrome.notifications.clear(notificationId);
   // }, 5000);
