@@ -10,7 +10,7 @@ export function upDateSessionContentAndMinutes(clockMinutes) {
   let textContent;
   let remainingMinutes;
 
-  if (clockMinutes <= 50) {
+  if (clockMinutes < 51) {
     textContent = "Work";
     remainingMinutes = 50 - clockMinutes;
   } else {

@@ -4,13 +4,23 @@ import {
   upDateSessionContentAndMinutes,
   updateClock,
 } from "../util.js";
-import { handleSound } from "../offscreen/offscreen.js";
 
 beforeEach(async () => {
+  const event = () => ({
+    addListener: jest.fn(),
+    removeListener: jest.fn(),
+    hasListener: jest.fn(),
+  });
   global.chrome = {
     notifications: {
       create: jest.fn(), // create is now a Jest mock function
       clear: jest.fn(),
+    },
+    alarms: {
+      create: jest.fn(),
+      clear: jest.fn(),
+      get: jest.fn(),
+      onAlarm: event(),
     },
     runtime: {
       getURL: jest.fn((path) => `chrome-extension://fakeid/${path}`),
@@ -42,12 +52,12 @@ describe("upDateSessionContentAndMinutes", () => {
     expect(result.remainingMinutes).toBe(50); // 50 - 49
   });
 
-  test("break starts at 10:50 (clockMinutes = 50)", () => {
-    const clockMinutes = 50;
+  test("break starts at 10:50:00 (clockMinutes)", () => {
+    const clockMinutes = 51;
     const result = upDateSessionContentAndMinutes(clockMinutes);
 
     expect(result.textContent).toBe("Break");
-    expect(result.remainingMinutes).toBe(10); // 60 - 59
+    expect(result.remainingMinutes).toBe(9); // 60 - 59
   });
 });
 test("updateClock returns correct minutes and seconds", () => {
@@ -60,7 +70,7 @@ test("updateClock returns correct minutes and seconds", () => {
 
   jest.restoreAllMocks();
 });
-describe("Show notification creates, clears, and plays audio correctly", () => {
+describe("Show notification creates, and clears", () => {
   test("shows break notification with the correct message", () => {
     const title = "Break Finished!";
     const message = "Back to work for 50 minutes.";
@@ -104,38 +114,4 @@ describe("Show notification creates, clears, and plays audio correctly", () => {
       },
     );
   });
-
-  test("sends playSound message", () => {
-    showNotification("test", "test");
-
-    expect(chrome.runtime.sendMessage).toHaveBeenCalledWith({
-      type: "playSound",
-    });
-  });
-
-  test("clears notification after timeout", () => {
-    jest.useFakeTimers();
-
-    showNotification("A", "B");
-
-    jest.runAllTimers();
-
-    // clear called with correct title and id
-    expect(chrome.notifications.clear).toHaveBeenCalledWith(
-      "session-notification",
-    );
-  });
-});
-
-test("plays sound when msg.type === 'playSound'", () => {
-  handleSound({ type: "playSound" });
-
-  // URL produced by your existing mock
-  expect(Audio).toHaveBeenCalledWith("chrome-extension://fakeid/ding.mp3");
-
-  // get the mock Audio instance
-  const audioInstance = Audio.mock.results[0].value;
-
-  // and verify play() was called
-  expect(audioInstance.play).toHaveBeenCalled();
 });

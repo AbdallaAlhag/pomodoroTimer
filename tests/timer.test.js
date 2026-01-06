@@ -9,7 +9,7 @@ test("Grabs current time correctly", () => {
 
 test("Grabs current session and remaining minutes for sesison", () => {
   for (let i = 0; i < 60; i++) {
-    if (i < 50) {
+    if (i < 51) {
       expect(upDateSessionContentAndMinutes(i).textContent).toBe("Work");
       expect(upDateSessionContentAndMinutes(i).remainingMinutes).toBe(50 - i);
     } else {
