@@ -7,18 +7,10 @@ export function updateClock() {
 }
 
 export function upDateSessionContentAndMinutes(clockMinutes) {
-  // let textContent;
-  // if (clockMinutes < 50) {
-  //   textContent = "Work";
-  // } else {
-  //   textContent = "Break";
-  // }
-  // let remainingMinutes =
-  //   textContent === "Work" ? 50 - clockMinutes : 60 - clockMinutes;
   let textContent;
   let remainingMinutes;
 
-  if (clockMinutes < 50) {
+  if (clockMinutes <= 50) {
     textContent = "Work";
     remainingMinutes = 50 - clockMinutes;
   } else {
@@ -47,7 +39,6 @@ export function showNotification(title, message) {
   chrome.alarms.onAlarm.addListener((alarm) => {
     if (alarm.name === "clear-notification") {
       chrome.notifications.clear(notificationId);
-      console.log("notification cleared");
     }
   });
 }
