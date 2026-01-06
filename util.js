@@ -12,7 +12,7 @@ export function upDateSessionContentAndMinutes(clockMinutes) {
 
   if (clockMinutes < 50) {
     textContent = "Work";
-    remainingMinutes = 50 - clockMinutes;
+    remainingMinutes = 49 - clockMinutes;
   } else {
     textContent = "Break";
     remainingMinutes = 59 - clockMinutes;
