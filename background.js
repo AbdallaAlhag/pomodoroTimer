@@ -28,7 +28,7 @@ function updateTimer() {
 
   const minutes = String(remainingMinutes).padStart(2, "0");
 
-  const seconds = String(59 - clockSeconds + 1).padStart(2, "0");
+  const seconds = String(59 - clockSeconds).padStart(2, "0");
   chrome.storage.local.set({
     minutes: minutes,
     seconds: seconds,

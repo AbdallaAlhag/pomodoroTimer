@@ -15,7 +15,7 @@ export function upDateSessionContentAndMinutes(clockMinutes) {
     remainingMinutes = 50 - clockMinutes;
   } else {
     textContent = "Break";
-    remainingMinutes = 9 - (clockMinutes - 50);
+    remainingMinutes = 59 - clockMinutes;
     // this gives exactly 10 minutes of break
   }
   return { textContent, remainingMinutes };
