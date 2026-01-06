@@ -19,7 +19,7 @@
     }
   ],
 
-  "permissions": ["storage", "alarms", "notifications", "offscreen"],
+  "permissions": ["storage", "alarms", "notifications"],
   "background": {
     "service_worker": "background.js",
     "type": "module"
